@@ -1,20 +1,18 @@
 package my.project.testretrofit.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import my.project.testretrofit.databinding.FragmentCabinetBinding
 import my.project.testretrofit.databinding.FragmentChatBinding
-import my.project.testretrofit.databinding.FragmentSignInBinding
 
-class FragmentChat: FragmentBase() {
-    private lateinit var binding: FragmentChatBinding
+class FragmentCabinet: FragmentBase() {
+    private lateinit var binding: FragmentCabinetBinding
 
     companion object {
-        fun newInstance(): FragmentChat {
-            return FragmentChat()
+         fun newInstance(): FragmentCabinet {
+            return FragmentCabinet()
         }
     }
 
@@ -23,7 +21,7 @@ class FragmentChat: FragmentBase() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentChatBinding.inflate(layoutInflater)
+        binding = FragmentCabinetBinding.inflate(layoutInflater)
         return binding.root
     }
 

@@ -3,17 +3,17 @@
     <item
         android:id="@+id/item_1"
         android:enabled="true"
-        android:title="Профиль"
+        android:title="Кабинет"
         android:icon="@drawable/phone_svg"/>
     <item
         android:id="@+id/item_2"
         android:enabled="true"
-        android:title="Продукты"
+        android:title="Магазин"
         android:icon="@drawable/phone_svg"/>
     <item
         android:id="@+id/item_3"
         android:enabled="true"
-        android:title="Добавить продукт"
+        android:title="Мои заказы"
         android:icon="@drawable/phone_svg"/>
     <item
         android:id="@+id/item_4"

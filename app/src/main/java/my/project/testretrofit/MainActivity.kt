@@ -1,22 +1,17 @@
 package my.project.testretrofit
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import my.project.testretrofit.databinding.ActivityMainBinding
 import my.project.testretrofit.fragments.*
-import my.project.testretrofit.utils.MyWebSocketClientKT
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPref: SharedPreferences
-    val client: MyWebSocketClientKT = MyWebSocketClientKT("ws://192.168.6.38:8001")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,52 +21,55 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             var resultFlag = false
+            var fragment = FragmentBase()
+
+            loadTokenFromCache()
+
             when(item.itemId) {
                 R.id.item_1 -> {
-                    if (FragmentBase().safeCheckUserValid())
-                        openChat() else  openNotValid()
+                    fragment = if (tokenIsNotNull())
+                        FragmentCabinet.newInstance() else FragmentLogIn.newInstance()
                     resultFlag = true
                 }
                 R.id.item_2 -> {
-                    if (FragmentBase().safeCheckUserValid())
-                        openChat() else  openNotValid()
+                    fragment = if(tokenIsNotNull()) FragmentChat.newInstance()
+                    else FragmentLogIn.newInstance()
                     resultFlag = true
                 }
                 R.id.item_3 -> {
-                    if (FragmentBase().safeCheckUserValid())
-                        openProduct() else  openNotValid()
+                    fragment = if (tokenIsNotNull())
+                        FragmentList.newInstance() else FragmentLogIn.newInstance()
                     resultFlag = true
                 }
                 R.id.item_4 -> {
-                    if (FragmentBase().safeCheckUserValid())
-                        openList() else  openNotValid()
+                    fragment = if (tokenIsNotNull())
+                        FragmentList.newInstance() else FragmentLogIn.newInstance()
                     resultFlag = true
                 }
 
             }
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+            if (!resultFlag) {
+                binding.bottomNavigation.selectedItemId = R.id.item_1
+            }
             resultFlag
         }
-        client.connect()
-        loadTokenFromCache()
-        inAuthOrListIfUserNotAuthorized()
+        binding.bottomNavigation.selectedItemId = R.id.item_1
     }
 
-    private fun inAuthOrListIfUserNotAuthorized() {
-        if (tokenIsNotNull()) {
-            openChat()
-        } else {
-            openLogIn()
-        }
-    }
 
     private fun loadTokenFromCache(){
-        TokenStorage.TOKEN = sharedPref.getString(Constants.TOKEN_NAME_CAHCE, null).toString()
+        TokenStorage.TOKEN = sharedPref.getString(Constants.TOKEN_NAME_CAHCE, null)
         println("DDDDD " + TokenStorage.TOKEN)
     }
 
     private fun tokenIsNotNull(): Boolean {
         return TokenStorage.TOKEN != null
     }
+
 
     private fun openLogIn() {
         supportFragmentManager.beginTransaction()
@@ -84,26 +82,8 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragment_container, FragmentChat.newInstance())
             .commit()
     }
-
-    private fun openList() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, FragmentList.newInstance())
-            .commit()
+    protected fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun openNotValid() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, FragmentNotValid.newInstance())
-            .commit()
-    }
-
-    private fun openProduct() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, FragmentProdct.newInstance())
-            .commit()
-    }
-
-    public fun goIngProduct() {
-        binding.bottomNavigation.selectedItemId = R.id.item_1
-    }
 }

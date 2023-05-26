@@ -3,17 +3,17 @@ package my.project.testretrofit.utils
 class Validator {
 
     fun validatePassword(password: String): Boolean {
-        val pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,50}$".toRegex()
+        val pattern = "^[a-zA-Z0-9]{5,20}\$".toRegex()
         return pattern.matches(password)
     }
 
     fun validateUsername(username: String): Boolean {
-        val pattern = "^[a-zA-Z0-9_-]{3,25}$".toRegex()
+        val pattern = "^[a-zA-Z][a-zA-Z0-9]{4,11}$".toRegex()
         return pattern.matches(username)
     }
 
     fun validateEmail(email: String): Boolean {
-        val pattern = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})".toRegex()
+        val pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}\$".toRegex()
         return pattern.matches(email)
     }
 

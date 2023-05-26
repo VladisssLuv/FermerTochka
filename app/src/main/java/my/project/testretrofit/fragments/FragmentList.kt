@@ -36,9 +36,6 @@ class FragmentList: FragmentBase() {
     private lateinit var binding: FragmentListBinding
     private lateinit var adapter: RecycleAdapter
     private val retrofitSource: RetrofitSource = RetrofitSource()
-    private lateinit var cameraSource:  CameraSource
-
-    private val CAMERA_PERMISSION_REQUEST_CODE = 1001
 
     companion object {
         fun newInstance(): FragmentList {
@@ -58,10 +55,6 @@ class FragmentList: FragmentBase() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(!safeCheckUserValid()) {
-            openNotValidUser()
-        }
-
         adapter = RecycleAdapter(object : ActionListener{
             override fun onClick(v: View) {
                 val animation = AnimationUtils.loadAnimation(context, R.anim.anim_click)
@@ -70,108 +63,11 @@ class FragmentList: FragmentBase() {
             }
         })
 
-        adapter.products = ArrayList<ItemRecycler>(10)
-
         val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
         binding.recycler.layoutManager = linearLayoutManager
         binding.recycler.adapter = adapter
         println("OTKRIILS")
         binding.progressBar.visibility = View.INVISIBLE
-
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.CAMERA),
-                CAMERA_PERMISSION_REQUEST_CODE
-            )
-        }
-
-        binding.cardProduct.setOnClickListener {
-            openChat()
-        }
-
-        startCamera()
-    }
-
-    private fun startCamera() {
-        val barcodeDetector = BarcodeDetector.Builder(requireContext())
-            .setBarcodeFormats(Barcode.QR_CODE)
-            .build()
-
-        cameraSource = CameraSource.Builder(requireContext(), barcodeDetector)
-            .setAutoFocusEnabled(true)
-            .build()
-
-        binding.cameraPreview.holder.addCallback(object : SurfaceHolder.Callback {
-            override fun surfaceCreated(holder: SurfaceHolder) {
-                try {
-                    if (ActivityCompat.checkSelfPermission(
-                            requireContext(),
-                            Manifest.permission.CAMERA
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        return
-                    }
-                    cameraSource.start(binding.cameraPreview.holder)
-                } catch (e: IOException) {
-                    Log.e("CAMERA", e.message ?: "")
-                }
-            }
-
-            override fun surfaceChanged(
-                holder: SurfaceHolder,
-                format: Int,
-                width: Int,
-                height: Int
-            ) {
-            }
-
-            override fun surfaceDestroyed(holder: SurfaceHolder) {
-                cameraSource.stop()
-            }
-        })
-
-        barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
-            override fun release() {}
-
-            override fun receiveDetections(detections: Detector.Detections<Barcode>) {
-                val barcodes = detections.detectedItems
-                if (barcodes.size() > 0) {
-                    val barcode = barcodes.valueAt(0)
-                    Log.d("QR_CODE", barcode.rawValue ?: "")
-                    val test = barcode.rawValue
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        binding.cardProduct.visibility = View.VISIBLE
-                        binding.cardProduct.text = test
-                    }
-                    cameraSource.stop()
-                }
-            }
-        })
-
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCamera()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Camera permission is required to scan QR code",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
     }
 
 }
