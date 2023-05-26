@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/teal_700">
+
+    <View
+        android:id="@+id/top_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/content_top_chat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/inputMessage"/>
+
+    <EditText
+        android:id="@+id/inputMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
+        android:hint="Type a message"
+        android:paddingStart="20dp"
+        android:paddingEnd="60dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/input_message"
+        app:layout_constraintTop_toBottomOf="@id/top_chat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/send"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
