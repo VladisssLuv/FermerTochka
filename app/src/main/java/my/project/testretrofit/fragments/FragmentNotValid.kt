@@ -28,11 +28,8 @@ class FragmentNotValid: FragmentBase() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.update.setOnClickListener {
-            tryOpenList()
+            openCabinet()
         }
     }
 
-    private fun tryOpenList() {
-        openList()
-    }
 }

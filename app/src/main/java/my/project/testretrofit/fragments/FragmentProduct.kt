@@ -52,7 +52,6 @@ class FragmentProduct: FragmentBase() {
             override fun onClick(v: View) {
                 val animation = AnimationUtils.loadAnimation(context, R.anim.anim_click)
                 v.startAnimation(animation)
-                openChat()
             }
         })
         binding.recycler.adapter = adapter
