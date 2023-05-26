@@ -59,27 +59,10 @@ open class FragmentBase: Fragment() {
     }
 
     protected fun saveToken(token: String) {
+        println("СОХРАНЕНИЕ " + token)
         activity?.getSharedPreferences("myCache", Context.MODE_PRIVATE)?.edit()
             ?.putString(Constants.TOKEN_NAME_CAHCE, token)
             ?.apply()
         TokenStorage.TOKEN = token
-    }
-
-    public fun safeCheckUserValid(): Boolean {
-        var flagResult = true
-        SafeRequest(lifecycleScope).request(object: SafeRequest.Protection{
-            override suspend fun makeRequest(): BaseResponseInterface? {
-                return RetrofitSource().getUserData()
-            }
-
-            override fun ifSuccess(response: BaseResponseInterface?) {
-                flagResult = (response as User).valid
-                println((response as User).valid)
-                println((response as User).name)
-                println((response as User).login)
-            }
-        })
-        println("DDDDDD" + flagResult)
-        return flagResult
     }
 }

@@ -22,9 +22,6 @@ class FragmentLogIn : FragmentBase() {
     private val validator: Validator = Validator()
     private val retrofitSource: RetrofitSource = RetrofitSource()
 
-    private val CHANNEL_ID = "your_channel_id"
-    private val NOTIFICATION_ID = 1
-
     companion object {
         fun newInstance(): FragmentLogIn {
             return FragmentLogIn()
@@ -95,7 +92,7 @@ class FragmentLogIn : FragmentBase() {
                 if (response != null && response is ResponseToken) {
                     showToast("Вы авторизовались")
                     saveToken(response.token)
-                    println(response.token)
+                    println("ПРИЛЕТЕЛ " + response.token)
                     openList()
                 }
             }

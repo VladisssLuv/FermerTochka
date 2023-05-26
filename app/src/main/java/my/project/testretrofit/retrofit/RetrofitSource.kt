@@ -26,8 +26,8 @@ class RetrofitSource(): BaseRetrofit() {
     }
 
     suspend fun getUserData(): User = super.wrapRetrofitExceptions {
-        println("DDDDDDD" + TokenStorage.TOKEN)
-        managerRetrofitAPI.getUserData(TokenStorage.TOKEN ?: "")
+        println("DDDDDDD Bearer " + TokenStorage.TOKEN)
+        managerRetrofitAPI.getUserData("Bearer " + TokenStorage.TOKEN)
     }
 
    /* suspend fun allProducts() : Products = super.wrapRetrofitExceptions {
