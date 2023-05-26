@@ -3,8 +3,10 @@ package my.project.testretrofit
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import my.project.testretrofit.databinding.ActivityMainBinding
 import my.project.testretrofit.fragments.*
 
@@ -48,18 +50,20 @@ class MainActivity : AppCompatActivity() {
             resultFlag
         }
         binding.bottomNavigation.selectedItemId = R.id.item_1
+
+        binding.bottomNavigation.visibility = View.GONE
     }
 
 
     private fun loadTokenFromCache(){
         TokenStorage.TOKEN = sharedPref.getString(Constants.TOKEN_NAME_CAHCE, null)
+        TokenStorage.ID = sharedPref.getInt("ID", -23)
         println("DDDDD " + TokenStorage.TOKEN)
     }
 
     private fun tokenIsNotNull(): Boolean {
         return TokenStorage.TOKEN != null
     }
-
 
     private fun openLogIn() {
         supportFragmentManager.beginTransaction()

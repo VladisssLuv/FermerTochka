@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import my.project.testretrofit.R
 import my.project.testretrofit.TokenStorage
 import my.project.testretrofit.databinding.FragmentCabinetBinding
@@ -49,13 +50,9 @@ class FragmentCabinet: FragmentBase() {
         val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
         binding.recycler.layoutManager = linearLayoutManager
 
-        adapter = RecycleAdapter(object : ActionListener {
-            override fun onClick(v: View) {
-                val animation = AnimationUtils.loadAnimation(context, R.anim.anim_click)
-                v.startAnimation(animation)
-                openChat()
-            }
-        })
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+
+        adapter = RecycleAdapter()
         binding.recycler.adapter = adapter
 
         var array = listOf<ResponseComment>()
@@ -68,19 +65,21 @@ class FragmentCabinet: FragmentBase() {
                 response as User
                 binding.name.text = response.name
                 binding.role.text = response.role
+                saveID(response.id)
                 binding.name.visibility = View.VISIBLE
                 binding.role.visibility = View.VISIBLE
+                binding.progressBarTitle.visibility = View.INVISIBLE
             }
 
             override fun ifBackendException() {
                 TokenStorage.TOKEN = null
-                saveToken(null)
+                saveToken(null, -1)
                 openLogIn()
             }
 
             override fun ifException() {
                 TokenStorage.TOKEN = null
-                saveToken(null)
+                saveToken(null, -1)
                 openLogIn()
             }
         })
@@ -96,15 +95,15 @@ class FragmentCabinet: FragmentBase() {
                 println("DDDDDDD " + (response as ResponseCommentList).list)
                 array = (response as ResponseCommentList).list
                 adapter.products = array
+                binding.progressBarList.visibility = View.INVISIBLE
             }
         })
 
 
-
-
         binding.logOut.setOnClickListener {
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
             TokenStorage.TOKEN = null
-            saveToken(null)
+            saveToken(null, -1)
             openLogIn()
         }
     }

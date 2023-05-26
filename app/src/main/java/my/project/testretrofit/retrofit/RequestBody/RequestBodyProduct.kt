@@ -1,5 +1,6 @@
 package my.project.testretrofit.retrofit.RequestBody
 
+import my.project.testretrofit.retrofit.ResponseBody.BaseResponseInterface
 import java.io.File
 import java.util.Base64
 
@@ -10,4 +11,4 @@ data class RequestBodyProduct(
     val description: String,
     val cost: Double,
     val photo: String?
-)
+) : BaseResponseInterface

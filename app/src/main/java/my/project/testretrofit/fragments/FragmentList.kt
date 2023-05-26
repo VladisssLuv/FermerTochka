@@ -55,13 +55,7 @@ class FragmentList: FragmentBase() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = RecycleAdapter(object : ActionListener{
-            override fun onClick(v: View) {
-                val animation = AnimationUtils.loadAnimation(context, R.anim.anim_click)
-                v.startAnimation(animation)
-                openChat()
-            }
-        })
+        adapter = RecycleAdapter()
 
         val linearLayoutManager = LinearLayoutManager(context)
         binding.recycler.layoutManager = linearLayoutManager

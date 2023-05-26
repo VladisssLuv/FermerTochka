@@ -3,17 +3,14 @@ package my.project.testretrofit.recycler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import my.project.testretrofit.R
 import my.project.testretrofit.databinding.ItemProductBinding
 import my.project.testretrofit.retrofit.ResponseBody.ResponseComment
 
-interface ActionListener {
-    fun onClick(v: View)
-}
 
-class RecycleAdapter(
-    private val actionListener: ActionListener
-): RecyclerView.Adapter<RecycleAdapter.ItemViewHolder>(), View.OnClickListener {
+class RecycleAdapter(): RecyclerView.Adapter<RecycleAdapter.ItemViewHolder>(){
 
     var products: List<ResponseComment> = emptyList()
         set(value) {
@@ -27,8 +24,6 @@ class RecycleAdapter(
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemProductBinding.inflate(inflater, parent, false)
 
-        binding.root.setOnClickListener(this)
-
         return ItemViewHolder(binding)
     }
 
@@ -37,7 +32,11 @@ class RecycleAdapter(
         with(holder.binding) {
             title.text = product.nameUser
             brand.text = product.reviews
-            price.text = product.assessment
+            for (i in 1 .. product.assessment.toInt()) {
+                val imageView = ImageView(root.context)
+                imageView.setImageResource(R.drawable.star)
+                holder.binding.stars.addView(imageView)
+            }
         }
         holder.itemView.tag = product
     }
@@ -45,9 +44,5 @@ class RecycleAdapter(
     class ItemViewHolder(
         val binding: ItemProductBinding
     ): RecyclerView.ViewHolder(binding.root)
-
-    override fun onClick(v: View) {
-        actionListener.onClick(v)
-    }
 
 }

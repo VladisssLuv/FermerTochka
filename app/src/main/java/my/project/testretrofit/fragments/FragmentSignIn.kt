@@ -105,7 +105,7 @@ class FragmentSignIn: FragmentBase() {
 
             override fun ifSuccess(response: BaseResponseInterface?) {
                 response as ResponseToken
-                saveToken(response.token)
+                saveToken(response.token, -10)
                 println(response.token)
                 openCabinet()
             }

@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputLayout
 import my.project.testretrofit.*
 import my.project.testretrofit.databinding.FragmentLogInBinding
@@ -40,15 +42,10 @@ class FragmentLogIn : FragmentBase() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).isEnabled = true
+
         binding.logInButton.setOnClickListener {
             tryLogIn()
-            /*val intent = Intent(requireContext(), NotificationService::class.java)
-            requireContext().startService(intent)
-            requireContext().stopService(intent)*/
-
-            /*val mainActivity = activity as MainActivity
-            println("DDDDD " + mainActivity.client.isOpen)
-            mainActivity.client.send("{\"event\":\"message\",\"data\":\"Hello, server!\"}")*/
         }
 
         binding.textReg.setOnClickListener {
@@ -91,7 +88,7 @@ class FragmentLogIn : FragmentBase() {
             override fun ifSuccess(response: BaseResponseInterface?) {
                 if (response != null && response is ResponseToken) {
                     showToast("Вы авторизовались")
-                    saveToken(response.token)
+                    saveToken(response.token, -10)
                     println("ПРИЛЕТЕЛ " + response.token)
                     openCabinet()
                 }
@@ -114,6 +111,7 @@ class FragmentLogIn : FragmentBase() {
                 showToast("Ошибка авторизации")
             }
         })
+
     }
 
     private fun isPasswordValid(password: String): Boolean {

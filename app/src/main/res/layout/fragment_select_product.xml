@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/name"
-        android:text="Ваши товары"
+        android:text="Новый товар"
         android:textSize="24sp"
         android:gravity="center"
         android:padding="10dp"
@@ -29,48 +29,68 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"/>
 
+    <TextView
+        android:id="@+id/categoty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="dfsdf"
+        android:textSize="24sp"
+        android:paddingStart="30sp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/basketTitle"
-        android:text="Все товары"
-        android:textSize="22sp"
-
-        android:layout_marginTop="10dp"
-        android:paddingStart="30dp"
+        android:id="@+id/desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="dfsdf"
+        android:textSize="24sp"
+        android:paddingStart="30sp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/categoty"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="dfsdf"
+        android:textSize="24sp"
+        android:paddingStart="30sp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/desc"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/categoty"
         app:layout_constraintTop_toBottomOf="@id/lineView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/basketTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/add_product"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressBarList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:indeterminate="true"
-        android:visibility="visible"/>
+        android:layout_marginBottom="20dp" />
 
     <Button
-        android:id="@+id/add_product"
+        android:id="@+id/delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/teal_700"
-        android:text="Добавить"
+        android:text="Удалить"
+        android:background="@drawable/costom_button"
+        android:textSize="20sp"
+        android:layout_margin="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/red"
+        />
+
+    <Button
+        android:id="@+id/red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/teal_700"
+        android:text="Редактировать"
         android:background="@drawable/costom_button"
         android:textSize="20sp"
         android:layout_margin="25dp"

@@ -36,5 +36,8 @@ class RetrofitSource(): BaseRetrofit() {
     suspend fun getReviewsbyId(id: Int) : List<ResponseComment> = super.wrapRetrofitExceptions  {
         managerRetrofitAPI.getReviewsbyId("Bearer " + TokenStorage.TOKEN, id)
     }
+    suspend fun getProductList(id: Int) : List<ResponseProduct> = super.wrapRetrofitExceptions  {
+        managerRetrofitAPI.getProductList("Bearer " + TokenStorage.TOKEN, id)
+    }
 
 }

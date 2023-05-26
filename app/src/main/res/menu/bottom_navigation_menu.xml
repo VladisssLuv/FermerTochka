@@ -4,11 +4,11 @@
         android:id="@+id/item_1"
         android:enabled="true"
         android:title="Кабинет"
-        android:icon="@drawable/phone_svg"/>
+        android:icon="@drawable/home"/>
     <item
         android:id="@+id/item_2"
         android:enabled="true"
         android:title="Товары"
-        android:icon="@drawable/phone_svg"/>
+        android:icon="@drawable/tovari"/>
 
 </menu>

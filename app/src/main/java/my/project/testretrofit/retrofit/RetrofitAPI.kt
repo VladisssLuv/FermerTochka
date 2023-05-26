@@ -26,6 +26,10 @@ interface RetrofitAPI {
     suspend fun getReviewsbyId(@Header("Authorization") token: String,
                                @Query("id") id: Int) : List<ResponseComment>
 
+    @GET("product/get-products-by-user-id")
+    suspend fun getProductList(@Header("Authorization") token: String,
+                               @Query("id") id: Int) : List<ResponseProduct>
+
 
     /*@Headers("Content-Type: application/json")
     @GET("auth/products")

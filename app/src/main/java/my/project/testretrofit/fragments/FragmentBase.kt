@@ -71,11 +71,19 @@ open class FragmentBase: Fragment() {
             ?.replace(R.id.fragment_container, FragmentAddProduct.newInstance())
             ?.commit()
     }
-    protected fun saveToken(token: String?) {
+    protected fun saveToken(token: String?, id: Int) {
         println("СОХРАНЕНИЕ " + token)
         activity?.getSharedPreferences("myCache", Context.MODE_PRIVATE)?.edit()
             ?.putString(Constants.TOKEN_NAME_CAHCE, token)
             ?.apply()
+        saveID(id)
         TokenStorage.TOKEN = token
     }
+    protected fun saveID (id: Int) {
+        activity?.getSharedPreferences("myCache", Context.MODE_PRIVATE)?.edit()
+            ?.putInt("ID", id)
+            ?.apply()
+        TokenStorage.ID = id
+    }
+
 }

@@ -11,6 +11,6 @@ data class User(
     val phone : String,
     val address: String,
     val dateRegistration: Any?,
-    val photo: File?,
+    val photo: String?,
     val role: String
 ) : BaseResponseInterface
