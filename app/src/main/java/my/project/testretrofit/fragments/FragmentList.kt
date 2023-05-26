@@ -63,7 +63,7 @@ class FragmentList: FragmentBase() {
             }
         })
 
-        val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
+        val linearLayoutManager = LinearLayoutManager(context)
         binding.recycler.layoutManager = linearLayoutManager
         binding.recycler.adapter = adapter
         println("OTKRIILS")

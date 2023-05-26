@@ -6,5 +6,6 @@ data class RequestBodyUserSign (
     val name: String,
     val email: String,
     val phone: String,
-    val dateBirth: String
+    val address: String,
+    val role: String
 )

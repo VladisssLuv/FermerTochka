@@ -72,7 +72,7 @@ class FragmentLogIn : FragmentBase() {
             binding.inputName,
             validator.getUsernameRequirements())
 
-        if (/*flagValidPassword*/true && flagValidUsername) {
+        if (flagValidPassword && flagValidUsername) {
             safeLogIn(username, password)
         }
     }
@@ -93,7 +93,7 @@ class FragmentLogIn : FragmentBase() {
                     showToast("Вы авторизовались")
                     saveToken(response.token)
                     println("ПРИЛЕТЕЛ " + response.token)
-                    openList()
+                    openCabinet()
                 }
             }
 
@@ -108,6 +108,10 @@ class FragmentLogIn : FragmentBase() {
             // тут должен быть ifAuthException но сервер не возвращает 402, только 400
             override fun ifBackendException() {
                 showToast("Не верный логин или пароль")
+            }
+
+            override fun ifException() {
+                showToast("Ошибка авторизации")
             }
         })
     }

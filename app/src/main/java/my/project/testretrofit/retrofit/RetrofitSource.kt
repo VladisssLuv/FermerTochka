@@ -1,10 +1,10 @@
 package my.project.testretrofit.retrofit
 
 import my.project.testretrofit.TokenStorage
+import my.project.testretrofit.retrofit.RequestBody.RequestBodyProduct
 import my.project.testretrofit.retrofit.RequestBody.RequestBodyUserLog
 import my.project.testretrofit.retrofit.RequestBody.RequestBodyUserSign
-import my.project.testretrofit.retrofit.ResponseBody.ResponseToken
-import my.project.testretrofit.retrofit.ResponseBody.User
+import my.project.testretrofit.retrofit.ResponseBody.*
 
 class RetrofitSource(): BaseRetrofit() {
     private lateinit var managerRetrofitAPI: RetrofitAPI
@@ -26,11 +26,15 @@ class RetrofitSource(): BaseRetrofit() {
     }
 
     suspend fun getUserData(): User = super.wrapRetrofitExceptions {
-        println("DDDDDDD Bearer " + TokenStorage.TOKEN)
         managerRetrofitAPI.getUserData("Bearer " + TokenStorage.TOKEN)
     }
 
-   /* suspend fun allProducts() : Products = super.wrapRetrofitExceptions {
-        managerRetrofitAPI.allProducts(TokenStorage.TOKEN ?: "")
-    }*/
+    suspend fun addProduct(body: RequestBodyProduct): ResponseProduct = super.wrapRetrofitExceptions {
+        managerRetrofitAPI.addProduct("Bearer " + TokenStorage.TOKEN, body)
+    }
+
+    suspend fun getReviewsbyId(id: Int) : List<ResponseComment> = super.wrapRetrofitExceptions  {
+        managerRetrofitAPI.getReviewsbyId("Bearer " + TokenStorage.TOKEN, id)
+    }
+
 }

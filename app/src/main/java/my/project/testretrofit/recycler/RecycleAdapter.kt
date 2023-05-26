@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import my.project.testretrofit.databinding.ItemProductBinding
+import my.project.testretrofit.retrofit.ResponseBody.ResponseComment
 
 interface ActionListener {
     fun onClick(v: View)
@@ -14,7 +15,7 @@ class RecycleAdapter(
     private val actionListener: ActionListener
 ): RecyclerView.Adapter<RecycleAdapter.ItemViewHolder>(), View.OnClickListener {
 
-    var products: List<ItemRecycler> = emptyList()
+    var products: List<ResponseComment> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -34,8 +35,9 @@ class RecycleAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val product = products[position]
         with(holder.binding) {
-            title.text = "ItemRecycler_title"
-            brand.text = "ItemRecycler_brand"
+            title.text = product.nameUser
+            brand.text = product.reviews
+            price.text = product.assessment
         }
         holder.itemView.tag = product
     }

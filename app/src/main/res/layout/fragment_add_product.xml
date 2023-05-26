@@ -4,37 +4,30 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/tree"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <TextView
-        android:id="@+id/title_text"
+        android:id="@+id/name"
+        android:text="Новый товар"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/teal_700"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Authorization"
-        android:textSize="25sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="25dp"
-        android:textColor="@color/teal_700"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/barrier"
-        app:layout_constraintTop_toBottomOf="@id/logo"/>
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="logo, title_text"/>
+        app:layout_constraintTop_toBottomOf="@id/name"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputName"
@@ -53,22 +46,21 @@
         app:counterMaxLength="25"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/inputPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier">
+        app:layout_constraintTop_toBottomOf="@id/lineView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="26"
-            android:hint="username"
+            android:hint="Наименование"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputPassword"
+        android:id="@+id/inputDisc"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,46 +68,88 @@
         android:gravity="center"
         android:layout_margin="10dp"
         app:helperText=""
-        app:startIconDrawable="@drawable/password_svg"
+        app:startIconDrawable="@drawable/badge_svg"
         app:helperTextTextColor="@color/red"
         app:boxStrokeColor="@color/teal_700"
         app:hintTextColor="@color/teal_700"
         app:counterEnabled="true"
-        app:counterMaxLength="50"
-        app:endIconMode="password_toggle"
+        app:counterMaxLength="300"
+        app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inputName">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/editTextDisc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="51"
-            android:inputType="textPassword"
-            android:hint="password"
+            android:maxLength="301"
+            android:hint="Опимание"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/text_reg"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputPrice"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintWidth_max="400dp"
         android:gravity="center"
-        android:text="No account. register"
-        android:textSize="15sp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"
+        app:helperText=""
+        app:startIconDrawable="@drawable/badge_svg"
+        app:helperTextTextColor="@color/red"
+        app:boxStrokeColor="@color/teal_700"
+        app:hintTextColor="@color/teal_700"
+        app:counterEnabled="true"
+        app:counterMaxLength="300"
+        app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/logInButton"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputDisc">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:maxLength="301"
+            android:hint="Стоимость"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/add_photo"
+        app:layout_constraintTop_toBottomOf="@id/inputPrice"
+        android:layout_marginBottom="20dp"
+        />
 
     <Button
-        android:id="@+id/logInButton"
+        android:id="@+id/add_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/teal_700"
-        android:text="Log In"
+        android:text="Сделать фото"
+        android:background="@drawable/costom_button"
+        android:textSize="20sp"
+        android:layout_margin="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/add_product"
+        />
+
+    <Button
+        android:id="@+id/add_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/teal_700"
+        android:text="Добавить товар"
         android:background="@drawable/costom_button"
         android:textSize="20sp"
         android:layout_margin="25dp"
@@ -124,15 +158,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:indeterminate="true"
-        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

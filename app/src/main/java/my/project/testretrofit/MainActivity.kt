@@ -32,18 +32,8 @@ class MainActivity : AppCompatActivity() {
                     resultFlag = true
                 }
                 R.id.item_2 -> {
-                    fragment = if(tokenIsNotNull()) FragmentChat.newInstance()
+                    fragment = if(tokenIsNotNull()) FragmentProduct.newInstance()
                     else FragmentLogIn.newInstance()
-                    resultFlag = true
-                }
-                R.id.item_3 -> {
-                    fragment = if (tokenIsNotNull())
-                        FragmentList.newInstance() else FragmentLogIn.newInstance()
-                    resultFlag = true
-                }
-                R.id.item_4 -> {
-                    fragment = if (tokenIsNotNull())
-                        FragmentList.newInstance() else FragmentLogIn.newInstance()
                     resultFlag = true
                 }
 

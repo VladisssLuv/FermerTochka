@@ -58,7 +58,20 @@ open class FragmentBase: Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    protected fun saveToken(token: String) {
+    protected fun openCabinet() {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim)
+            ?.replace(R.id.fragment_container, FragmentCabinet.newInstance())
+            ?.commit()
+    }
+
+    protected fun openAddProduct() {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim)
+            ?.replace(R.id.fragment_container, FragmentAddProduct.newInstance())
+            ?.commit()
+    }
+    protected fun saveToken(token: String?) {
         println("СОХРАНЕНИЕ " + token)
         activity?.getSharedPreferences("myCache", Context.MODE_PRIVATE)?.edit()
             ?.putString(Constants.TOKEN_NAME_CAHCE, token)

@@ -1,5 +1,6 @@
 package my.project.testretrofit.fragments
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.textfield.TextInputLayout
 import my.project.testretrofit.R
 import my.project.testretrofit.databinding.FragmentLogInBinding
 import my.project.testretrofit.databinding.FragmentSignInBinding
@@ -55,17 +57,49 @@ class FragmentSignIn: FragmentBase() {
     private fun trySignIn() {
         val email = binding.editTextEmail.text.toString()
         val password = binding.editTextPassword.text.toString()
-        val login = binding.editTextName.text.toString()
+        val login = binding.editTextLogin.text.toString()
+        val name = binding.editTextName.text.toString()
+        val number = binding.editTextNumber.text.toString()
+        val address = binding.editTextAddress.text.toString()
 
-        safeSingUp(email, password, login)
+        val flagValidPassword: Boolean = validator.validatePassword(password)
+        val flagValidUsername: Boolean = validator.validateUsername(login)
+        val flagValidEmail: Boolean = true
+        val flagValidNumber: Boolean = true
+
+        updateWarningTextInputByFlag(
+            flagValidPassword,
+            binding.inputPassword,
+            validator.getPasswordRequirements())
+
+        updateWarningTextInputByFlag(
+            flagValidUsername,
+            binding.inputName,
+            validator.getUsernameRequirements())
+
+        updateWarningTextInputByFlag(
+            flagValidEmail,
+            binding.inputEmail,
+            validator.getEmailRequirements())
+
+        updateWarningTextInputByFlag(
+            flagValidNumber,
+            binding.inputNumber,
+            validator.getNumberRequirements())
+
+        if (flagValidPassword && flagValidUsername && flagValidEmail && flagValidNumber) {
+            var role = "FARMER"
+            safeSingUp(email, password, login, number, address, name, role)
+        }
+
     }
 
-    private fun safeSingUp(email: String, password: String, login: String) {
+    private fun safeSingUp(email: String, password: String, login:
+    String, number: String, address: String, name: String, role: String) {
         SafeRequest(lifecycleScope).request(object : SafeRequest.Protection {
             override suspend fun makeRequest(): BaseResponseInterface? {
                 return retrofitSource.signUp(RequestBodyUserSign(
-                    login, password,"DIMOCHKA", email,
-                    "89088908089", "2023-05-22"
+                    login, password, name, email, number, address, role
                 ))
             }
 
@@ -73,9 +107,21 @@ class FragmentSignIn: FragmentBase() {
                 response as ResponseToken
                 saveToken(response.token)
                 println(response.token)
-                openNotValidUser()
+                openCabinet()
             }
         })
+    }
+
+    private fun updateWarningTextInputByFlag(
+        flagWarning: Boolean,
+        textInputLayout: TextInputLayout,
+        message: String
+    ) {
+        if (!flagWarning) {
+            textInputLayout.helperText = message
+        } else {
+            textInputLayout.helperText = ""
+        }
     }
 
 }

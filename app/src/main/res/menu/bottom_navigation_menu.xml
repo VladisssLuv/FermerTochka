@@ -8,18 +8,7 @@
     <item
         android:id="@+id/item_2"
         android:enabled="true"
-        android:title="Магазин"
+        android:title="Товары"
         android:icon="@drawable/phone_svg"/>
-    <item
-        android:id="@+id/item_3"
-        android:enabled="true"
-        android:title="Мои заказы"
-        android:icon="@drawable/phone_svg"/>
-    <item
-        android:id="@+id/item_4"
-        android:enabled="true"
-        android:title="Сканер"
-        android:icon="@drawable/phone_svg"/>
-
 
 </menu>

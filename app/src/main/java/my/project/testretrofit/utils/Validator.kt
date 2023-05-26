@@ -12,6 +12,11 @@ class Validator {
         return pattern.matches(username)
     }
 
+    fun validateNumber(number: String): Boolean {
+        val pattern = "^((\\+7|7|8)+([\\- ]?))+(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}\$".toRegex()
+        return pattern.matches(number)
+    }
+
     fun validateEmail(email: String): Boolean {
         val pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}\$".toRegex()
         return pattern.matches(email)
@@ -32,6 +37,10 @@ class Validator {
     fun getEmailRequirements(): String {
         return "Email must begin with a Latin letter and contain characters before and after " +
                 "the @ symbol and the symbol . (dot)."
+    }
+
+    fun getNumberRequirements(): String {
+        return "Number not valid"
     }
 
 
