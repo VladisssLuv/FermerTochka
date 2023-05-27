@@ -5,8 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
 import my.project.testretrofit.R
 import my.project.testretrofit.TokenStorage
 import my.project.testretrofit.databinding.FragmentPoductBinding
@@ -44,6 +50,24 @@ class FragmentProduct: FragmentBase() {
             openLogIn()
         }
 
+        val spinner: Spinner = binding.basketTitle
+        val items = arrayOf("Без фильтра", "Все", "Молочная продукция", "Мясная продукция", "Овощи", "Фрукты")
+        val adapter2 = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, items)
+        spinner.adapter = adapter2
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedItem = parent.getItemAtPosition(position) as String
+                println("DDDDDDDDDDDDDDDDDDDDDD " + position)
+                binding.progressBarList.visibility = View.VISIBLE
+                safeRequest(position + 1)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+
+        safeRequest(1)
 
         val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
         binding.recycler.layoutManager = linearLayoutManager
@@ -56,12 +80,21 @@ class FragmentProduct: FragmentBase() {
         })
         binding.recycler.adapter = adapter
 
+
+        binding.addProduct.setOnClickListener {
+            openAddProduct()
+        }
+    }
+
+    private fun safeRequest(idCategory : Int) {
         var array = listOf<ResponseProduct>()
 
         SafeRequest(lifecycleScope).request(object : SafeRequest.Protection {
             override suspend fun makeRequest(): BaseResponseInterface? {
                 return ResponseProductList(
-                    retrofitSource.getProductList(TokenStorage.ID)
+                    if (idCategory == 1)
+                        retrofitSource.getProductList(TokenStorage.ID)
+                    else retrofitSource.getProductList(TokenStorage.ID, idCategory)
                 )
             }
 
@@ -76,9 +109,5 @@ class FragmentProduct: FragmentBase() {
                 println("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR ")
             }
         })
-
-        binding.addProduct.setOnClickListener {
-            openAddProduct()
-        }
     }
 }

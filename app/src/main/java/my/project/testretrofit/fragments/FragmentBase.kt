@@ -86,4 +86,11 @@ open class FragmentBase: Fragment() {
         TokenStorage.ID = id
     }
 
+    protected fun openProductList() {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.setCustomAnimations( R.anim.enter_anim, R.anim.exit_anim)
+            ?.replace(R.id.fragment_container, FragmentProduct.newInstance())
+            ?.commit()
+    }
+
 }

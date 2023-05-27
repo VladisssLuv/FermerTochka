@@ -40,4 +40,8 @@ class RetrofitSource(): BaseRetrofit() {
         managerRetrofitAPI.getProductList("Bearer " + TokenStorage.TOKEN, id)
     }
 
+    suspend fun getProductList(id: Int, idCategory: Int ) : List<ResponseProduct> = super.wrapRetrofitExceptions  {
+        managerRetrofitAPI.getProductList("Bearer " + TokenStorage.TOKEN, id, idCategory)
+    }
+
 }

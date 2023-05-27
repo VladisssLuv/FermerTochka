@@ -43,13 +43,15 @@ class RecycleAdapterProduct(
         with(holder.binding) {
             title.text = product.name
             brand.text = product.categoryName
-            ct.text = product.cost.toString()
+            ct.text = product.cost.toString() + " руб."
             desc.text = product.description
 
             if (product.photo != null) {
                 val decodedString = Base64.decode(product.photo, Base64.DEFAULT)
                 val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
                 img.setImageBitmap(decodedByte)
+            } else {
+                img.setImageDrawable(null)
             }
 
         }

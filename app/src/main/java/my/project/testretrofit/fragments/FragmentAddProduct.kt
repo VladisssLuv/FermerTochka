@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import android.Manifest
+import android.view.WindowManager
 import my.project.testretrofit.TokenStorage
 import my.project.testretrofit.databinding.FragmentAddProductBinding
 import my.project.testretrofit.retrofit.RequestBody.RequestBodyProduct
@@ -67,7 +68,7 @@ class FragmentAddProduct: FragmentBase(){
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val selectedItem = parent.getItemAtPosition(position) as String
-                indexCategory = position + 1
+                indexCategory = position + 2
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -98,11 +99,17 @@ class FragmentAddProduct: FragmentBase(){
                 }
 
                 override fun ifSuccess(response: BaseResponseInterface?) {
+                    showToast("Продукт добавлен")
                 }
             })
             binding.editTextName.setText(" ")
             binding.editTextDisc.setText(" ")
             binding.editTextPrice.setText(" ")
+            binding.image.setImageDrawable(null)
+        }
+
+        binding.back.setOnClickListener {
+            openProductList()
         }
     }
 
